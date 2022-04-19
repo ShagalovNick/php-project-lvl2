@@ -1,0 +1,20 @@
+{
+    "name": "hexlet/code",
+    "autoload": {
+        "psr-4": {
+            "Hexlet\\Code\\": "src/"
+        },
+        "files": [
+            "bin/gendiff"
+        ]
+    },
+    "authors": [
+        {
+            "name": "ShagalovNick",
+            "email": "sekunda-61@yandex.ru"
+        }
+    ],
+    "require": {
+        "docopt/docopt": "^1.0"
+    }
+}
