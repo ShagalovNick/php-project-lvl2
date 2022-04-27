@@ -2,8 +2,9 @@
 
 namespace Hexlet\Code\Differ;
 
-function valueToString( $value ){ 
-    return ( !is_bool( $value ) ?  $value : ($value ? 'true' : 'false' )  ); 
+function valueToString($value)
+{
+    return (!is_bool($value) ? $value : ($value ? 'true' : 'false'));
 }
 
 function genDiff($file1, $file2)
@@ -13,19 +14,18 @@ function genDiff($file1, $file2)
     $result = array_merge(array_diff_assoc($arrFile2, $arrFile1), $arrFile1);
     ksort($result);
 
-    echo "{".PHP_EOL;
-    foreach($result as $key => $value) {
+    echo "{" . PHP_EOL;
+    foreach ($result as $key => $value) {
         if (!array_key_exists($key, $arrFile1)) {
-            echo '  + '.$key.': '.valueToString($value).PHP_EOL;
+            echo '  + ' . $key . ': ' . valueToString($value) . PHP_EOL;
         } elseif (!array_key_exists($key, $arrFile2)) {
-            echo '  - '.$key.': '.valueToString($value).PHP_EOL;
+            echo '  - ' . $key . ': ' . valueToString($value) . PHP_EOL;
         } elseif ($value === $arrFile2[$key]) {
-            echo '    '.$key.': '.valueToString($value).PHP_EOL;
+            echo '    ' . $key . ': ' . valueToString($value) . PHP_EOL;
         } else {
-            echo '  - '.$key.': '.$value.PHP_EOL;
-            echo '  + '.$key.': '.valueToString($arrFile2[$key]).PHP_EOL;
+            echo '  - ' . $key . ': ' . $value . PHP_EOL;
+            echo '  + ' . $key . ': ' . valueToString($arrFile2[$key]) . PHP_EOL;
         }
     }
-    echo "}".PHP_EOL;
+    echo "}" . PHP_EOL;
 }
-
