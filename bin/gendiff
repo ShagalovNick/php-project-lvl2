@@ -15,9 +15,14 @@ Options:
 DOC;
 
 require('../vendor/docopt/docopt/src/docopt.php');
+//require_once __DIR__ . '/../vendor/autoload.php';
+require_once('../src/Differ.php');
 
 $args = Docopt::handle($doc, array('version'=>'Naval Fate 2.0'));
 
-foreach ($args as $k=>$v)
+/* foreach ($args as $k=>$v)
 
-    echo $k.': '.json_encode($v).PHP_EOL;
+    echo $k.': '.json_encode($v).PHP_EOL;*/
+
+use Hexlet\Code\Differ;
+Differ\genDiff($args['<firstFile>'], $args['<secondFile>']);

@@ -5,7 +5,9 @@
             "Hexlet\\Code\\": "src/"
         },
         "files": [
-            "bin/gendiff"
+            "bin/gendiff",
+            "src/Differ.php",
+            "vendor/docopt/docopt/src/docopt.php"
         ]
     },
     "authors": [
