@@ -5,9 +5,7 @@
             "Hexlet\\Code\\": "src/"
         },
         "files": [
-            "bin/gendiff",
-            "src/Differ.php",
-            "vendor/docopt/docopt/src/docopt.php"
+            "src/Differ.php"
         ]
     },
     "authors": [
@@ -19,5 +17,8 @@
     "require": {
         "docopt/docopt": "^1.0",
         "wp-cli/php-cli-tools": "^0.11.13"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "*"
     }
 }

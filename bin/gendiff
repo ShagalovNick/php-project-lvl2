@@ -15,8 +15,8 @@ Options:
 DOC;
 
 require('../vendor/docopt/docopt/src/docopt.php');
-//require_once __DIR__ . '/../vendor/autoload.php';
-require_once('../src/Differ.php');
+require_once __DIR__ . '/../vendor/autoload.php';
+//require_once('../src/Differ.php');
 
 $args = Docopt::handle($doc, array('version'=>'Naval Fate 2.0'));
 
