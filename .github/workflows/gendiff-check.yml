@@ -1,4 +1,4 @@
-name: brain-games-check
+name: differ-check
 on: push
 jobs:
   build:
