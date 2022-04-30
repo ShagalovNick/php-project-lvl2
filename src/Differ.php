@@ -9,8 +9,10 @@ function valueToString($value)
 
 function genDiff($file1, $file2)
 {
-    $arrFile1 = json_decode(file_get_contents(realpath($file1)), true);
-    $arrFile2 = json_decode(file_get_contents(realpath($file2)), true);
+    $file1Str = file_get_contents(realpath($file1));
+    $file2Str = file_get_contents(realpath($file2));
+    $arrFile1 = json_decode($file1Str, true);
+    $arrFile2 = json_decode($file2Str, true);
     $result = array_merge(array_diff_assoc($arrFile2, $arrFile1), $arrFile1);
     ksort($result);
 
