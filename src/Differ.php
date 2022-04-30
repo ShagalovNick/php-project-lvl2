@@ -7,17 +7,22 @@ function valueToString($value)
     return (!is_bool($value) ? $value : ($value ? 'true' : 'false'));
 }
 
+function getFile($file1, $file2)
+{
+    $arrFile1 = json_decode(file_get_contents(realpath($file1)), true);
+    $arrFile2 = json_decode(file_get_contents(realpath($file2)), true);
+    return [$arrFile1, $arrFile2];
+}
+
 function genDiff($file1, $file2)
 {
-    $file1Str = file_get_contents(realpath($file1));
-    $file2Str = file_get_contents(realpath($file2));
-    $arrFile1 = json_decode($file1Str, true);
-    $arrFile2 = json_decode($file2Str, true);
+    //$file1Str = file_get_contents(realpath($file1));
+    //$file2Str = file_get_contents(realpath($file2));
+    [$arrFile1, $arrFile2] = getFile($file1, $file2);
     $result = array_merge(array_diff_assoc($arrFile2, $arrFile1), $arrFile1);
     ksort($result);
 
     $dif = [];
-    //$dif = "{";
     foreach ($result as $key => $value) {
         if (!array_key_exists($key, $arrFile1)) {
             $dif[] = '  + ' . $key . ': ' . valueToString($value);
@@ -31,7 +36,6 @@ function genDiff($file1, $file2)
         }
     }
     $dif[] = '}' . PHP_EOL;
-
     $resultDif = '{';
     foreach ($dif as $value) {
         $resultDif .= PHP_EOL . $value;
