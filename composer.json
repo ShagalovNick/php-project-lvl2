@@ -5,7 +5,8 @@
             "Hexlet\\Code\\": "src/"
         },
         "files": [
-            "src/Differ.php"
+            "src/Differ.php",
+            "src/Parsers.php"
         ]
     },
     "authors": [
@@ -16,7 +17,8 @@
     ],
     "require": {
         "docopt/docopt": "^1.0",
-        "wp-cli/php-cli-tools": "^0.11.13"
+        "wp-cli/php-cli-tools": "^0.11.13",
+        "symfony/yaml": "^5.4"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "*",

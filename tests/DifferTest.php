@@ -27,5 +27,6 @@ class DifferTest extends TestCase
 }
 ";
         $this->assertEquals($result, genDiff('tests/fixtures/file1.json', 'tests/fixtures/file2.json'));
+        $this->assertEquals($result, genDiff('tests/fixtures/filepath1.yml', 'tests/fixtures/filepath2.yml'));
     }
 }
