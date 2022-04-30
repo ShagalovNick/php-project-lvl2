@@ -16,8 +16,6 @@ function getFile($file1, $file2)
 
 function genDiff($file1, $file2)
 {
-    //$file1Str = file_get_contents(realpath($file1));
-    //$file2Str = file_get_contents(realpath($file2));
     [$arrFile1, $arrFile2] = getFile($file1, $file2);
     $result = array_merge(array_diff_assoc($arrFile2, $arrFile1), $arrFile1);
     ksort($result);
