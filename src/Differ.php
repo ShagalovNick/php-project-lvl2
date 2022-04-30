@@ -9,23 +9,31 @@ function valueToString($value)
 
 function genDiff($file1, $file2)
 {
-    $arrFile1 = json_decode(file_get_contents($file1), true);
-    $arrFile2 = json_decode(file_get_contents($file2), true);
+    $arrFile1 = json_decode(file_get_contents(realpath($file1)), true);
+    $arrFile2 = json_decode(file_get_contents(realpath($file2)), true);
     $result = array_merge(array_diff_assoc($arrFile2, $arrFile1), $arrFile1);
     ksort($result);
 
-    echo "{" . PHP_EOL;
+    $dif = [];
+    //$dif = "{";
     foreach ($result as $key => $value) {
         if (!array_key_exists($key, $arrFile1)) {
-            echo '  + ' . $key . ': ' . valueToString($value) . PHP_EOL;
+            $dif[] = '  + ' . $key . ': ' . valueToString($value);
         } elseif (!array_key_exists($key, $arrFile2)) {
-            echo '  - ' . $key . ': ' . valueToString($value) . PHP_EOL;
+            $dif[] = '  - ' . $key . ': ' . valueToString($value);
         } elseif ($value === $arrFile2[$key]) {
-            echo '    ' . $key . ': ' . valueToString($value) . PHP_EOL;
+            $dif[] = '    ' . $key . ': ' . valueToString($value);
         } else {
-            echo '  - ' . $key . ': ' . $value . PHP_EOL;
-            echo '  + ' . $key . ': ' . valueToString($arrFile2[$key]) . PHP_EOL;
+            $dif[] = '  - ' . $key . ': ' . $value;
+            $dif[] = '  + ' . $key . ': ' . valueToString($arrFile2[$key]);
         }
     }
-    echo "}" . PHP_EOL;
+    $dif[] = '}' . PHP_EOL;
+
+    $resultDif = '{';
+    foreach ($dif as $value) {
+        $resultDif .= PHP_EOL . $value;
+    }
+    echo $resultDif;
+    return $resultDif;
 }
