@@ -25,4 +25,4 @@ $args = Docopt::handle($doc, array('version'=>'Naval Fate 2.0'));
     echo $k.': '.json_encode($v).PHP_EOL;*/
 
 use Hexlet\Code\Differ;
-Differ\genDiff($args['<firstFile>'], $args['<secondFile>']);
+Differ\genDiff($args['<firstFile>'], $args['<secondFile>'], "Hexlet\Code\Formatter\stylish");

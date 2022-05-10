@@ -5,28 +5,13 @@ namespace Hexlet\Code\Tests;
 use PHPUnit\Framework\TestCase;
 use function Hexlet\Code\Differ\genDiff;
 
-// класс UtilsTest наследует класс TestCase
-// имя класса совпадает с именем файла
 class DifferTest extends TestCase
 {
-    // Метод, функция определенная внутри класса
-    // Должна начинаться со слова test
-    // public – чтобы PHPUnit мог вызвать этот тест снаружи
     public function testGendiff(): void
     {
-        // Сначала идет ожидаемое значение (expected)
-        // И только потом актуальное (actual)
-
-        $result = "{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}
-";
-        $this->assertEquals($result, genDiff('tests/fixtures/file1.json', 'tests/fixtures/file2.json'));
-        $this->assertEquals($result, genDiff('tests/fixtures/filepath1.yml', 'tests/fixtures/filepath2.yml'));
+        $dif = genDiff('tests/fixtures/filepath1.json', 'tests/fixtures/filepath2.json');
+        $this->assertEquals(['new' => 'follow: false'], $dif['common']['follow']);
+        $this->assertEquals(['nodif' => 'foo: bar'], $dif['group1']['foo']);
+        $this->assertEquals(['old' => ['key' => 'value'], 'new' => 'nest: str'], $dif['group1']['nest']);
     }
 }

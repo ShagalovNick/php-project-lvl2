@@ -7,7 +7,7 @@ function getFile($file1, $file2)
     if (stripos($file1, '.json')) {
         $parse1 = 'json_decode';
         $parse2 = 'file_get_contents';
-    } elseif (stripos($file1, '.yml')) {
+    } elseif (stripos($file1, '.yml') || stripos($file1, '.yaml')) {
         $parse1 = 'Symfony\Component\Yaml\Yaml::parseFile';
         $parse2 = 'lcfirst';
     }
