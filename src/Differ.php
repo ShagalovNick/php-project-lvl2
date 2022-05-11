@@ -3,24 +3,26 @@
 namespace Hexlet\Code\Differ;
 
 use Symfony\Component\Yaml\Yaml;
-use Hexlet\Code\Formatter;
+use Hexlet\Code\Formatters;
+use Hexlet\Code\Formatters\Stylish;
+use Hexlet\Code\Formatters\Plain;
 
 use function Hexlet\Code\Parsers\getFile;
-
+use function Hexlet\Code\Formatters\chooseFormatter;
 
 function boolToString($value)
 {
     return (!is_bool($value) ? $value : ($value ? 'true' : 'false'));
 }
 
-function genDiff($file1, $file2, $formatter = "Hexlet\Code\Formatter\stylish")
+function genDiff($file1, $file2, $formatter)
 {
     [$arrFile1, $arrFile2] = getFile($file1, $file2);
     $result = array_merge_recursive($arrFile1, $arrFile2);
     $dif = getDif($result, $arrFile1, $arrFile2);
-    echo "{" . PHP_EOL;
+    ksort($dif);
+    $formatter = chooseFormatter($formatter);
     $formatter($dif);
-    echo "}" . PHP_EOL;
     return $dif;
 }
 
@@ -29,7 +31,7 @@ function keyToDiff($arr1, $arr2, string $key, $value)
     $result = [];
     if (isset($value[1]) && (array_key_exists($key, $arr1))) {
         if ($value[1] === $arr1[$key]) {
-            $result['nodif'] = $key . ': ' . boolToString($value[1]);
+            $result['nodif'] = boolToString($value[1]);
             return $result;
         }
     }
@@ -39,7 +41,7 @@ function keyToDiff($arr1, $arr2, string $key, $value)
             if (is_array($arval[$key])) {
                 $result[$ark] = $arval[$key];
             } else {
-                $result[$ark] = is_null($arval[$key]) ? $key . ': ' . "null" : $key . ': ' . boolToString($arval[$key]);
+                $result[$ark] = is_null($arval[$key]) ? "null" : boolToString($arval[$key]);
             }
         }
     }
@@ -57,5 +59,3 @@ function getDif($result, $arr1, $arr2, $key = '', $value = [])
     }
         return $dif;
 }
-
-

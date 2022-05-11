@@ -1,17 +1,16 @@
 <?php
 
-namespace Hexlet\Code\Formatter;
+namespace Hexlet\Code\Formatters\Stylish;
 
-function stylish(array $dif, $level = 0)
+function getArrStylish(array $dif, $level = 0)
 {
     global $level;
-    ksort($dif);
     foreach ($dif as $key => $value) {
         if (is_array($value)) {
             if (!isset($value['old']) && !isset($value['new']) && !isset($value['nodif'])) {
                 echo str_repeat(" ", $level * 4 + 2) . "  " . $key . ": {" . PHP_EOL;
                 $level = $level + 1;
-                $resultDif = stylish($value, $level);
+                $resultDif = getArrStylish($value, $level);
                 echo str_repeat(" ", $level * 4 + 2) . "  " . $resultDif . PHP_EOL;
             }
             $arFormat = ['old' => "- ", 'new' => "+ ", 'nodif' => "  "];
@@ -20,10 +19,10 @@ function stylish(array $dif, $level = 0)
                     if (is_array($value[$arkey])) {
                         echo str_repeat(" ", $level * 4 + 2) . $arvalue . $key . ": {" . PHP_EOL;
                         $level = $level + 1;
-                        $resultDif = stylish($value[$arkey], $level);
+                        $resultDif = getArrStylish($value[$arkey], $level);
                         echo str_repeat(" ", $level * 4 + 2) . "  " . $resultDif . PHP_EOL;
                     } else {
-                        echo str_repeat(" ", $level * 4 + 2) . $arvalue . $value[$arkey] . PHP_EOL;
+                        echo str_repeat(" ", $level * 4 + 2) . $arvalue . $key . ": " . $value[$arkey] . PHP_EOL;
                     }
                 }
             }
@@ -33,4 +32,11 @@ function stylish(array $dif, $level = 0)
     }
     $level = $level - 1;
     return "}";
+}
+
+function stylish(array $dif)
+{
+    echo "{" . PHP_EOL;
+    getArrStylish($dif);
+    echo "}" . PHP_EOL;
 }
