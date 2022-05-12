@@ -27,6 +27,5 @@ function json($dif)
     file_put_contents("chart_data.json", json_encode($result, JSON_UNESCAPED_UNICODE));
     echo json_encode($result, JSON_PRETTY_PRINT);
     $resultStr = json_encode($result, JSON_PRETTY_PRINT);
-    echo strpos($resultStr, '- setting3');
     return $resultStr;
 }

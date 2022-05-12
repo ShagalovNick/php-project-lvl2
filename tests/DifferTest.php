@@ -28,7 +28,7 @@ class DifferTest extends TestCase
 
     public function testGetArrJson(): void
     {
-        [$arrFile1, $arrFile2] = getFile('tests/fixtures/filepath1.json', 'tests/fixtures/filepath2.json');
+        [$arrFile1, $arrFile2] = getFile('tests/fixtures/filepath1.yaml', 'tests/fixtures/filepath2.yaml');
         $result = array_merge_recursive($arrFile1, $arrFile2);
         $dif = getDif($result, $arrFile1, $arrFile2);
         $res = getArrJson($dif);

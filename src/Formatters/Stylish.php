@@ -2,7 +2,7 @@
 
 namespace Hexlet\Code\Formatters\Stylish;
 
-function getArrStylish1(array $dif, $level = 0)
+/*function getArrStylish1(array $dif, $level = 0)
 {
     global $level;
     ksort($dif);
@@ -28,11 +28,10 @@ function getArrStylish1(array $dif, $level = 0)
     }
     $level = $level - 1;
     return "}";
-}
+}*/
 
-function getArrStylish(array $dif, $level = 0, $result = '')
+function getArrStylish(array $dif, &$level = 0, $result = '')
 {
-    global $level;
     ksort($dif);
     foreach ($dif as $key => $value) {
         if (is_array($value)) {
