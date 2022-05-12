@@ -20,7 +20,7 @@
             "email": "sekunda-61@yandex.ru"
         }
     ],
-    "description": "hexlet php-package",
+    "description": "hexlet. get dif 2 files - json or yaml",
     "license": "MIT",
     "require": {
         "docopt/docopt": "^1.0",

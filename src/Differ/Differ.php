@@ -10,10 +10,10 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
-use Symfony\Component\Yaml\Yaml;
-use Hexlet\Code\Formatters;
-use Hexlet\Code\Formatters\Stylish;
-use Hexlet\Code\Formatters\Plain;
+//use Symfony\Component\Yaml\Yaml;
+//use Hexlet\Code\Formatters;
+//use Hexlet\Code\Formatters\Stylish;
+//use Hexlet\Code\Formatters\Plain;
 
 use function Hexlet\Code\Parsers\getFile;
 use function Hexlet\Code\Formatters\chooseFormater;
