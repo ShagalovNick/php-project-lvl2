@@ -32,7 +32,7 @@ function getArrStylish(array $dif, $level = 0)
 
 function addIndent($level)
 {
-return str_repeat(" ", $level * 4 + 2);
+    return str_repeat(" ", $level * 4 + 2);
 }
 
 function stylish(array $dif)

@@ -45,13 +45,13 @@ function keyToDiff($arr1, $arr2, string $key, $value)
     return $result;
 }
 
-function getDif($result, $arr1, $arr2, $key = '', $value = [])
+function getDif($result, $arr1, $arr2, $key = '')
 {
     foreach ($result as $key => $value) {
         if (!isset($arr1[$key]) || !isset($arr2[$key]) || !is_array($arr1[$key]) || !is_array($arr2[$key])) {
             $dif[$key] = keyToDiff($arr1, $arr2, $key, $value);
         } else {
-            $dif[$key] = getDif($value, $arr1[$key], $arr2[$key], $key, $value);
+            $dif[$key] = getDif($value, $arr1[$key], $arr2[$key], $key);
         }
     }
         return $dif;
