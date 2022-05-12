@@ -29,14 +29,11 @@ function genDiff($file1, $file2, $formatter)
 function keyToDiff($arr1, $arr2, string $key, $value)
 {
     $result = [];
-    if (isset($value[1]) && (array_key_exists($key, $arr1))) {
-        if ($value[1] === $arr1[$key]) {
+    if (isset($value[1]) && (array_key_exists($key, $arr1)) && ($value[1] === $arr1[$key])) {
             $result['nodif'] = boolToString($value[1]);
             return $result;
-        }
     }
-        $arrrr = ['old' => $arr1, 'new' => $arr2];
-    foreach ($arrrr as $ark => $arval) {
+    foreach (['old' => $arr1, 'new' => $arr2] as $ark => $arval) {
         if (array_key_exists($key, $arval)) {
             if (is_array($arval[$key])) {
                 $result[$ark] = $arval[$key];

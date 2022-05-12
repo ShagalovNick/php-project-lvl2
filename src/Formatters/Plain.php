@@ -31,7 +31,6 @@ function plain($dif)
 {
     $result = [];
     $result = getArrPlain($dif);
-    print_r($result);
     foreach ($result as $key => $value) {
         $key = substr($key, 1);
         echo 'Property ' . "'{$key}'" . $value . PHP_EOL;
