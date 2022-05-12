@@ -29,10 +29,13 @@ function getArrPlain(array $dif, $path = '')
 
 function plain($dif)
 {
+    $resultStr = '';
     $result = [];
     $result = getArrPlain($dif);
     foreach ($result as $key => $value) {
         $key = substr($key, 1);
-        echo 'Property ' . "'{$key}'" . $value . PHP_EOL;
+        $resultStr .= 'Property ' . "'{$key}'" . $value . PHP_EOL;
     }
+    echo $resultStr;
+    return $resultStr;
 }

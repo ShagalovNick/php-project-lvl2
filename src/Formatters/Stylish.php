@@ -2,7 +2,7 @@
 
 namespace Hexlet\Code\Formatters\Stylish;
 
-function getArrStylish(array $dif, $level = 0)
+function getArrStylish1(array $dif, $level = 0)
 {
     global $level;
     ksort($dif);
@@ -30,6 +30,38 @@ function getArrStylish(array $dif, $level = 0)
     return "}";
 }
 
+function getArrStylish(array $dif, $level = 0, $result = '')
+{
+    global $level;
+    ksort($dif);
+    foreach ($dif as $key => $value) {
+        if (is_array($value)) {
+            if (!isset($value['old']) && !isset($value['new']) && !isset($value['nodif'])) {
+                $result = $result . addIndent($level) . "  " . $key . ": {" . PHP_EOL;
+                    $level++;
+                    $result = $result . getArrStylish($value, $level) . PHP_EOL;
+            }
+            foreach (['old' => "- ", 'new' => "+ ", 'nodif' => "  "] as $arkey => $arvalue) {
+                if (isset($value[$arkey])) {
+                    if (is_array($value[$arkey])) {
+                        $result = $result . addIndent($level) . $arvalue . $key . ": {" . PHP_EOL;
+                            $level++;
+                            $result = $result . getArrStylish($value[$arkey], $level) . PHP_EOL;
+                    } else {
+                        $result = $result . addIndent($level) . $arvalue . $key . ": " . $value[$arkey] . PHP_EOL;
+                    }
+                }
+            }
+        } else {
+            $result = $result . addIndent($level) . "  " . $key . ': ' . $value . PHP_EOL;
+        }
+    }
+    $result = $result . addIndent($level - 0.5) . "}";
+    $level--;
+    return $result;
+}
+
+
 function addIndent($level)
 {
     return str_repeat(" ", $level * 4 + 2);
@@ -37,7 +69,9 @@ function addIndent($level)
 
 function stylish(array $dif)
 {
-    echo "{" . PHP_EOL;
-    getArrStylish($dif);
-    echo "}" . PHP_EOL;
+    $result = "{" . PHP_EOL;
+    $result .= getArrStylish($dif);
+    $result .= PHP_EOL;
+    echo $result;
+    return $result;
 }

@@ -22,8 +22,8 @@ function genDiff(string $file1, string $file2, string $formatter = 'stylish')
     $dif = getDif($result, $arrFile1, $arrFile2);
     ksort($dif);
     $formatter = chooseFormatter($formatter);
-    $formatter($dif);
-    return $dif;
+    $result = $formatter($dif);
+    return $result;
 }
 
 function keyToDiff($arr1, $arr2, string $key, $value)
