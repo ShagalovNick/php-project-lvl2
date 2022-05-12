@@ -71,7 +71,6 @@ function stylish(array $dif)
 {
     $result = "{" . PHP_EOL;
     $result .= getArrStylish($dif);
-    $result .= PHP_EOL;
     echo $result;
     return $result;
 }
