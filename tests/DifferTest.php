@@ -3,7 +3,7 @@
 namespace Hexlet\Code\Tests;
 
 use PHPUnit\Framework\TestCase;
-use function Hexlet\Code\Differ\genDiff;
+use function Hexlet\Code\Differ\Differ\genDiff;
 use function Hexlet\Code\Formatters\Plain\getArrPlain;
 use function Hexlet\Code\Formatters\Json\getArrJson;
 
