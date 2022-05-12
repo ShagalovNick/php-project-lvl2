@@ -3,6 +3,7 @@
 namespace Hexlet\Code\Tests;
 
 use PHPUnit\Framework\TestCase;
+
 use function Differ\Differ\genDiff;
 use function Hexlet\Code\Formatters\Plain\getArrPlain;
 use function Hexlet\Code\Formatters\Json\getArrJson;
@@ -16,7 +17,7 @@ class DifferTest extends TestCase
         $dif = genDiff('tests/fixtures/filepath1.json', 'tests/fixtures/filepath2.json', 'stylish');
         $this->assertEquals(92, strpos($dif, '- setting3'));
     }
-    
+
     public function testGetArrPlain(): void
     {
         [$arrFile1, $arrFile2] = getFile('tests/fixtures/filepath1.json', 'tests/fixtures/filepath2.json');
@@ -36,5 +37,4 @@ class DifferTest extends TestCase
         $this->assertEquals('bar', $res['group1']['foo']);
         $this->assertEquals('100500', $res['+ group3']['fee']);
     }
-
 }
