@@ -8,7 +8,7 @@ use Hexlet\Code\Formatters\Stylish;
 use Hexlet\Code\Formatters\Plain;
 
 use function Hexlet\Code\Parsers\getFile;
-use function Hexlet\Code\Formatters\chooseFormatter;
+use function Hexlet\Code\Formatters\chooseFormat;
 
 function boolToString($value)
 {
@@ -21,7 +21,7 @@ function genDiff(string $file1, string $file2, string $formatter = 'stylish')
     $result = array_merge_recursive($arrFile1, $arrFile2);
     $dif = getDif($result, $arrFile1, $arrFile2);
     ksort($dif);
-    $formatter = chooseFormatter($formatter);
+    $formatter = chooseFormat($formatter);
     $result = $formatter($dif);
     return $result;
 }
