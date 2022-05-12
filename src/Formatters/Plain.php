@@ -24,6 +24,7 @@ function getArrPlain(array $dif, $path = '')
     $resultPlain = str_replace("'false'", 'false', $resultPlain);
     $resultPlain = str_replace("'true'", 'true', $resultPlain);
     $resultPlain = str_replace("'null'", 'null', $resultPlain);
+    $resultPlain = str_replace("'0'", '0', $resultPlain);
     return $resultPlain;
 }
 
@@ -36,6 +37,7 @@ function plain($dif)
         $key = substr($key, 1);
         $resultStr .= 'Property ' . "'{$key}'" . $value . PHP_EOL;
     }
+    $resultStr = substr($resultStr, 0, -1);
     echo $resultStr;
     return $resultStr;
 }
