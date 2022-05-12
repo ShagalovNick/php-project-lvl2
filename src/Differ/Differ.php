@@ -1,6 +1,6 @@
 <?php
 
-namespace Hexlet\Code\Differ\Differ;
+namespace Differ\Differ;
 
 use Symfony\Component\Yaml\Yaml;
 use Hexlet\Code\Formatters;

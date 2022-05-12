@@ -24,6 +24,6 @@ $args = Docopt::handle($doc, array('version'=>'Naval Fate 2.0'));
 
     echo $k.': '.json_encode($v).PHP_EOL;*/
 
-use function Hexlet\Code\Differ\Differ\genDiff;
+use function Differ\Differ\genDiff;
 
 genDiff($args['<firstFile>'], $args['<secondFile>'], $args['--format']);
