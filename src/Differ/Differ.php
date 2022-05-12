@@ -15,7 +15,7 @@ function boolToString($value)
     return (!is_bool($value) ? $value : ($value ? 'true' : 'false'));
 }
 
-function genDiff($file1, $file2, $formatter = 'stylish')
+function genDiff(string $file1, string $file2, string $formatter = 'stylish')
 {
     [$arrFile1, $arrFile2] = getFile($file1, $file2);
     $result = array_merge_recursive($arrFile1, $arrFile2);
