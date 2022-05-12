@@ -2,7 +2,7 @@
 
 namespace Hexlet\Code\Formatters;
 
-function chooseFormat($formatter)
+function chooseFormater($formatter)
 {
     $fileName = ucfirst($formatter);
     return "Hexlet\\Code\\Formatters\\{$fileName}\\{$formatter}";
