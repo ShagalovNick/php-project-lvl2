@@ -28,7 +28,8 @@ function genDiff(string $file1, string $file2, string $formatter = 'stylish')
     [$arrFile1, $arrFile2] = getFile($file1, $file2);
     $result = array_merge_recursive($arrFile1, $arrFile2);
     $dif = getDif($result, $arrFile1, $arrFile2);
-    ksort($dif);
+    //ksort($dif);
+    //print_r($dif);
     $formatter = chooseFormater($formatter);
     $result = $formatter($dif);
     return $result;

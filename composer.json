@@ -25,7 +25,8 @@
     "require": {
         "docopt/docopt": "^1.0",
         "wp-cli/php-cli-tools": "^0.11.13",
-        "symfony/yaml": "^5.4"
+        "symfony/yaml": "^5.4",
+        "lstrojny/functional-php": "^1.17"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "*",
