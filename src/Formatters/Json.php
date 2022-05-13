@@ -10,15 +10,18 @@ function getArrJson(array $dif)
     array_map(function ($key, $value) use (&$result) {
         if (!isset($value['old']) && !isset($value['new']) && !isset($value['nodif'])) {
             if (is_array($value)) {
-                $result [$key] = getArrJson($value);
+                $result[$key] = getArrJson($value);
             }
+        } else {
+            $arFormat = ['old' => "- ", 'new' => "+ ", 'nodif' => ""];
+            array_map(function ($arkey, $arvalue) use (&$result, $value, $key) {
+                if (isset($value[$arkey])) {
+                    $result[$arvalue . $key] = $value[$arkey];
+                }
+                return 'yehooo';
+            }, array_keys($arFormat), array_values($arFormat));
         }
-        $arFormat = ['old' => "- ", 'new' => "+ ", 'nodif' => ""];
-        array_map(function ($arkey, $arvalue) use (&$result, $value, $key) {
-            if (isset($value[$arkey])) {
-                $result[$arvalue . $key] = $value[$arkey];
-            }
-        }, array_keys($arFormat), array_values($arFormat));
+        return 'yehooo';
     }, array_keys($dif), array_values($dif));
     return $result;
 }
@@ -26,13 +29,9 @@ function getArrJson(array $dif)
 function json(array $dif)
 {
     $resultDif = getArrJson($dif);
-    if (is_array($resultDif)) {
-        file_put_contents("chart_data.json", json_encode($resultDif, JSON_UNESCAPED_UNICODE));
+        $bytes = file_put_contents("chart_data.json", json_encode($resultDif, JSON_UNESCAPED_UNICODE));
+        echo $bytes . ' bytes at chart_data.json' . PHP_EOL; 
         echo json_encode($resultDif, JSON_PRETTY_PRINT);
         $resultStr = json_encode($resultDif, JSON_PRETTY_PRINT);
         return $resultStr;
-    } else {
-        echo 'result is not array';
-        return false;
-    }
 }
