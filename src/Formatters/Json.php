@@ -30,7 +30,7 @@ function json(array $dif)
 {
     $resultDif = getArrJson($dif);
         $bytes = file_put_contents("chart_data.json", json_encode($resultDif, JSON_UNESCAPED_UNICODE));
-        echo $bytes . ' bytes at chart_data.json' . PHP_EOL; 
+        //echo $bytes . ' bytes at chart_data.json' . PHP_EOL;
         echo json_encode($resultDif, JSON_PRETTY_PRINT);
         $resultStr = json_encode($resultDif, JSON_PRETTY_PRINT);
         return $resultStr;
