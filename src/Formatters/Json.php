@@ -25,13 +25,14 @@ function getArrJson(array $dif)
 
 function json(array $dif)
 {
-    $result = getArrJson($dif);
-    if (file_put_contents("chart_data.json", json_encode($result, JSON_UNESCAPED_UNICODE))) {
-        echo json_encode($result, JSON_PRETTY_PRINT);
-        $resultStr = json_encode($result, JSON_PRETTY_PRINT);
+    $resultDif = getArrJson($dif);
+    if (is_array($resultDif)) {
+        file_put_contents("chart_data.json", json_encode($resultDif, JSON_UNESCAPED_UNICODE));
+        echo json_encode($resultDif, JSON_PRETTY_PRINT);
+        $resultStr = json_encode($resultDif, JSON_PRETTY_PRINT);
         return $resultStr;
     } else {
-        echo 'Error';
+        echo 'result is not array';
         return false;
     }
 }
