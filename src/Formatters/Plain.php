@@ -7,26 +7,27 @@ use function Functional\sort;
 function getArrPlain(array $dif, $path = '')
 {
     global $resultPlain;
-    $result = array_map(function ($key, $value) use ($path){
+    $result = array_map(function ($key, $value) use ($path) {
         global $resultPlain;
         if (isset($value['old']) && isset($value['new'])) {
+            $text = ' was updated. From ';
             if (is_array($value['new']) && is_array($value['old'])) {
-                return [$path . "." . $key => ' was updated. From ' . '[complex value]' . ' to ' . '[complex value]'];
+                return [$path . "." . $key => $text . '[complex value]' . ' to ' . '[complex value]'];
             } elseif (is_array($value['new'])) {
-                return [$path . "." . $key => ' was updated. From ' . "'{$value['old']}'" . ' to ' . '[complex value]'];
+                return [$path . "." . $key => $text . "'{$value['old']}'" . ' to ' . '[complex value]'];
             } elseif (is_array($value['old'])) {
-                return [$path . "." . $key => ' was updated. From ' . '[complex value]' . ' to ' . "'{$value['new']}'"];
+                return [$path . "." . $key => $text . '[complex value]' . ' to ' . "'{$value['new']}'"];
             } else {
-                return [$path . "." . $key => ' was updated. From ' . "'{$value['old']}'" . ' to ' . "'{$value['new']}'"];
+                return [$path . "." . $key => $text . "'{$value['old']}'" . ' to ' . "'{$value['new']}'"];
             }
             //is_array($value['new']) ? $value['new'] = '[complex value]' : $value['new'] = "'{$value['new']}'";
             //is_array($value['old']) ? $value['old'] = '[complex value]' : $value['old'] = "'{$value['old']}'";
             //return [$path . "." . $key => ' was updated. From ' . $value['old'] . ' to ' . $value['new']];
         } elseif (isset($value['new'])) {
             if (is_array($value['new'])) {
-                return [$path . "." . $key => ' was added with value: ' . '[complex value]'];                
+                return [$path . "." . $key => ' was added with value: ' . '[complex value]'];
             } else {
-                return [$path . "." . $key => ' was added with value: ' . "'{$value['new']}'"];                
+                return [$path . "." . $key => ' was added with value: ' . "'{$value['new']}'"];
             }
             //is_array($value['new']) ? $value['new'] = '[complex value]' : $value['new'] = "'{$value['new']}'";
             //return [$path . "." . $key => ' was added with value: ' . $value['new']];
@@ -34,7 +35,6 @@ function getArrPlain(array $dif, $path = '')
             return [$path . "." . $key => ' was removed'];
         } elseif (is_array($value) && !isset($value['nodif'])) {
             return getArrPlain($value, $path . '.' . $key);
-            
         }
     }, array_keys($dif), array_values($dif));
     /*foreach ($dif as $key => $value) {
@@ -70,7 +70,7 @@ function plain(array $dif, array $resultArr = [])
         $fixPoint = substr($key, 1);
         $resultStr .= 'Property ' . "'{$fixPoint}'" . $value . PHP_EOL;
     }*/
-    $resultArr = array_map(function ($key, $value){
+    $resultArr = array_map(function ($key, $value) {
         $fixPoint = substr($key, 1);
         return 'Property ' . "'{$fixPoint}'" . $value;
     }, array_keys($fixResult), array_values($fixResult));
