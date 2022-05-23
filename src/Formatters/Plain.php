@@ -4,7 +4,7 @@ namespace Hexlet\Code\Formatters\Plain;
 
 use function Functional\sort;
 
-function getArrPlain(array $dif, $path = '')
+function getArrPlain(array $dif, string $path = '')
 {
     global $resultPlain;
     $result = array_map(function ($key, $value) use ($path) {
@@ -56,7 +56,7 @@ function getArrPlain(array $dif, $path = '')
     return array_merge(...array_filter($result));
 }
 
-function plain(array $dif, array $resultArr = [])
+function plain(array $dif)
 {
     //$resultStr = '';
     //$result = [];
@@ -71,10 +71,10 @@ function plain(array $dif, array $resultArr = [])
         $resultStr .= 'Property ' . "'{$fixPoint}'" . $value . PHP_EOL;
     }*/
     $resultArr = array_map(function ($key, $value) {
-        $fixPoint = substr($key, 1);
+        $fixPoint = substr((string) $key, 1);
         return 'Property ' . "'{$fixPoint}'" . $value;
-    }, array_keys($fixResult), array_values($fixResult));
-    $resultSort = sort($resultArr, function ($left, $right) use ($resultArr) {
+    }, array_keys((array) $fixResult), array_values((array) $fixResult));
+    $resultSort = sort($resultArr, function ($left, $right) {
         return strcmp((string) $left, (string) $right);
     }, true);
     $resultStr = implode(PHP_EOL, $resultSort);
