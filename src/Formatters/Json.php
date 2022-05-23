@@ -6,7 +6,8 @@ use function Functional\sort;
 
 function getArrJson(array $dif)
 {
-    ksort($dif); //7
+    //ksort($dif); //7
+    uksort($dif, fn ($left, $right) => strcmp($left, $right));
     $result = array_map(function ($key, $value) use (&$result) {
         if (!isset($value['old']) && !isset($value['new']) && !isset($value['nodif'])) {
             if (is_array($value)) {
@@ -17,7 +18,7 @@ function getArrJson(array $dif)
             $resss = array_map(function ($arkey, $arvalue) use ($value, $key) {
                 if (isset($value[$arkey])) {
                     return [$arvalue . $key => $value[$arkey]];
-                }                
+                }
             }, array_keys($arFormat), array_values($arFormat));
             return array_merge(...array_filter($resss));
         }

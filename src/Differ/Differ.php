@@ -17,6 +17,7 @@ if (file_exists($autoloadPath1)) {
 
 use function Hexlet\Code\Parsers\getFile;
 use function Hexlet\Code\Formatters\chooseFormater;
+use function Functional\sort;
 
 function boolToString($value)
 {
@@ -29,6 +30,8 @@ function genDiff(string $file1, string $file2, string $formatter = 'stylish')
     $result = array_merge_recursive($arrFile1, $arrFile2);
     $dif = getDif($result, $arrFile1, $arrFile2);
     //ksort($dif);
+    //print_r($dif);
+    //$dif = sort($dif, fn ($left, $right) => strnatcmp($left, $right), true);
     //print_r($dif);
     $formatter = chooseFormater($formatter);
     $result = $formatter($dif);
