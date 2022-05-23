@@ -10,20 +10,16 @@ function getArrJson(array $dif)
     $result = array_map(function ($key, $value) use (&$result) {
         if (!isset($value['old']) && !isset($value['new']) && !isset($value['nodif'])) {
             if (is_array($value)) {
-                $res[$key] = getArrJson($value);
-                return $res;
+                return [$key => getArrJson($value)];
             }
         } else {
             $arFormat = ['old' => "- ", 'new' => "+ ", 'nodif' => ""];
-            $resss = array_map(function ($arkey, $arvalue) use (&$result, $value, $key) {
-                $resu = [];
+            $resss = array_map(function ($arkey, $arvalue) use ($value, $key) {
                 if (isset($value[$arkey])) {
-                    $resu[$arvalue . $key] = $value[$arkey];
-                }
-                return $resu;
+                    return [$arvalue . $key => $value[$arkey]];
+                }                
             }, array_keys($arFormat), array_values($arFormat));
-            $resss1 = array_merge(...array_filter($resss));
-            return $resss1;
+            return array_merge(...array_filter($resss));
         }
     }, array_keys($dif), array_values($dif));
     $result1 = array_merge(...$result);
