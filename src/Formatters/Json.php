@@ -7,6 +7,32 @@ use function Functional\sort;
 function getArrJson(array $dif)
 {
     ksort($dif); //7
+    $result = array_map(function ($key, $value) use (&$result) {
+        if (!isset($value['old']) && !isset($value['new']) && !isset($value['nodif'])) {
+            if (is_array($value)) {
+                $res[$key] = getArrJson($value);
+                return $res;
+            }
+        } else {
+            $arFormat = ['old' => "- ", 'new' => "+ ", 'nodif' => ""];
+            $resss = array_map(function ($arkey, $arvalue) use (&$result, $value, $key) {
+                $resu = [];
+                if (isset($value[$arkey])) {
+                    $resu[$arvalue . $key] = $value[$arkey];
+                }
+                return $resu;
+            }, array_keys($arFormat), array_values($arFormat));
+            $resss1 = array_merge(...array_filter($resss));
+            return $resss1;
+        }
+    }, array_keys($dif), array_values($dif));
+    $result1 = array_merge(...$result);
+    return $result1;
+}
+
+/*function getArrJson(array $dif)
+{
+    ksort($dif); //7
     array_map(function ($key, $value) use (&$result) {
         if (!isset($value['old']) && !isset($value['new']) && !isset($value['nodif'])) {
             if (is_array($value)) {
@@ -24,11 +50,12 @@ function getArrJson(array $dif)
         return 'yehooo';
     }, array_keys($dif), array_values($dif));
     return $result;
-}
+}*/
 
 function json(array $dif)
 {
     $resultDif = getArrJson($dif);
+    //print_r($resultDif);
         $bytes = file_put_contents("chart_data.json", json_encode($resultDif, JSON_UNESCAPED_UNICODE));
         //echo $bytes . ' bytes at chart_data.json' . PHP_EOL;
         echo json_encode($resultDif, JSON_PRETTY_PRINT);
