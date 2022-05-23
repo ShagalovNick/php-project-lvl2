@@ -8,7 +8,7 @@ function getArrJson(array $dif)
 {
     //ksort($dif); //7
     $difSort = sort($dif, function ($left, $right) use ($dif) {
-        return strcmp((string) array_search($left, $dif, false), (string) array_search($right, $dif, false));
+        return strcmp((string) array_search($left, $dif, true), (string) array_search($right, $dif, true));
     }, true);
     $result = array_map(function ($key, $value) {
         if (!isset($value['old']) && !isset($value['new']) && !isset($value['nodif'])) {

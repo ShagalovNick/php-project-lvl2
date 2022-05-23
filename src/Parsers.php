@@ -13,7 +13,7 @@ function getFile(string $file1, string $file2)
     } else {
         return false;
     }
-    $arrFile1 = $parse1($parse2((string) realpath($file1)), true);
-    $arrFile2 = $parse1($parse2((string) realpath($file2)), true);
+    $arrFile1 = $parse1((string)$parse2((string) realpath($file1)), true);
+    $arrFile2 = $parse1((string)$parse2((string) realpath($file2)), true);
     return [$arrFile1, $arrFile2];
 }
