@@ -24,7 +24,7 @@ class DifferTest extends TestCase
         $result = array_merge_recursive($arrFile1, $arrFile2);
         $dif = getDif($result, $arrFile1, $arrFile2);
         $res = getArrPlain($dif);
-        $this->assertEquals(' was updated. From true to null', $res['.common.setting3']);
+        $this->assertEquals(" was updated. From 'true' to 'null'", $res['.common.setting3']);
     }
 
     public function testGetArrJson(): void

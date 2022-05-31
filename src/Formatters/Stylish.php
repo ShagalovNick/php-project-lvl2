@@ -2,64 +2,37 @@
 
 namespace Hexlet\Code\Formatters\Stylish;
 
-/*function getArrStylish1(array $dif, $level = 0)
-{
-    global $level;
-    ksort($dif);
-    foreach ($dif as $key => $value) {
-        if (is_array($value)) {
-            if (!isset($value['old']) && !isset($value['new']) && !isset($value['nodif'])) {
-                echo addIndent($level++) . "  " . $key . ": {" . PHP_EOL;
-                echo addIndent($level) . "  " . getArrStylish($value, $level) . PHP_EOL;
-            }
-            foreach (['old' => "- ", 'new' => "+ ", 'nodif' => "  "] as $arkey => $arvalue) {
-                if (isset($value[$arkey])) {
-                    if (is_array($value[$arkey])) {
-                        echo addIndent($level++) . $arvalue . $key . ": {" . PHP_EOL;
-                        echo addIndent($level) . "  " . getArrStylish($value[$arkey], $level) . PHP_EOL;
-                    } else {
-                        echo addIndent($level) . $arvalue . $key . ": " . $value[$arkey] . PHP_EOL;
-                    }
-                }
-            }
-        } else {
-            echo addIndent($level) . "  " . $key . ': ' . $value . PHP_EOL;
-        }
-    }
-    $level = $level - 1;
-    return "}";
-}*/
+use function Functional\sort;
 
-function getArrStylish(array $dif, &$level = 0, $result = '')
+function getArrStylish(array $dif, $level = 0, $path = '')
 {
-    ksort($dif);
-    foreach ($dif as $key => $value) {
+    $difSort = sort($dif, function ($left, $right) use ($dif) {
+        return strcmp((string) array_search($left, $dif, true), (string) array_search($right, $dif, true));
+    }, true);
+    $result = array_map(function ($key, $value) use (&$path, $level) {
         if (is_array($value)) {
             if (!isset($value['old']) && !isset($value['new']) && !isset($value['nodif'])) {
-                $result = $result . addIndent($level) . "  " . $key . ": {" . PHP_EOL;
-                    $level++;
-                    $result = $result . getArrStylish($value, $level) . PHP_EOL;
-            }
-            foreach (['old' => "- ", 'new' => "+ ", 'nodif' => "  "] as $arkey => $arvalue) {
-                if (isset($value[$arkey])) {
-                    if (is_array($value[$arkey])) {
-                        $result = $result . addIndent($level) . $arvalue . $key . ": {" . PHP_EOL;
-                            $level++;
-                            $result = $result . getArrStylish($value[$arkey], $level) . PHP_EOL;
-                    } else {
-                        $result = $result . addIndent($level) . $arvalue . $key . ": " . $value[$arkey] . PHP_EOL;
+                    return getArrStylish($value, $level + 1, addIndent($level) . "  " . $key . ": {" . PHP_EOL);
+            } else {
+                $arFormat = ['old' => "- ", 'new' => "+ ", 'nodif' => "  "];
+                $resultDif = array_map(function ($arkey, $arvalue) use ($value, $key, $level) {
+                    if (isset($value[$arkey])) {
+                        if (is_array($value[$arkey])) {
+                            $keyDifArray = addIndent($level) . $arvalue . $key . ": {" . PHP_EOL;
+                            return getArrStylish($value[$arkey], $level + 1, $keyDifArray);
+                        } else {
+                                    return addIndent($level) . $arvalue . $key . ": " . $value[$arkey] . PHP_EOL;
+                        }
                     }
-                }
+                }, array_keys($arFormat), array_values($arFormat));
+                return implode(array_filter($resultDif));
             }
         } else {
-            $result = $result . addIndent($level) . "  " . $key . ': ' . $value . PHP_EOL;
+            return addIndent($level) . "  " . $key . ': ' . $value . PHP_EOL;
         }
-    }
-    $result = $result . addIndent($level - 0.5) . "}";
-    $level--;
-    return $result;
+    }, array_keys($difSort), array_values($difSort));
+    return implode('', [$path, ...$result]) . addIndent($level - 0.5) . "}" . PHP_EOL;
 }
-
 
 function addIndent($level)
 {
@@ -68,8 +41,7 @@ function addIndent($level)
 
 function stylish(array $dif)
 {
-    $result = "{" . PHP_EOL;
-    $result .= getArrStylish($dif);
-    echo $result;
-    return $result;
+    $result = "{" . PHP_EOL . getArrStylish($dif);
+    echo substr($result, 0, -1);
+    return substr($result, 0, -1);
 }
