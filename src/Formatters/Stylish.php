@@ -4,12 +4,12 @@ namespace Hexlet\Code\Formatters\Stylish;
 
 use function Functional\sort;
 
-function getArrStylish(array $dif, $level = 0, $path = '')
+function getArrStylish(array $dif, int $level = 0, string $path = '')
 {
     $difSort = sort($dif, function ($left, $right) use ($dif) {
         return strcmp((string) array_search($left, $dif, true), (string) array_search($right, $dif, true));
     }, true);
-    $result = array_map(function ($key, $value) use (&$path, $level) {
+    $result = array_map(function ($key, $value) use ($level) {
         if (is_array($value)) {
             if (!isset($value['old']) && !isset($value['new']) && !isset($value['nodif'])) {
                     return getArrStylish($value, $level + 1, addIndent($level) . "  " . $key . ": {" . PHP_EOL);
@@ -34,7 +34,7 @@ function getArrStylish(array $dif, $level = 0, $path = '')
     return implode('', [$path, ...$result]) . addIndent($level - 0.5) . "}" . PHP_EOL;
 }
 
-function addIndent($level)
+function addIndent(int $level)
 {
     return str_repeat(" ", $level * 4 + 2);
 }
