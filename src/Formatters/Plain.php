@@ -38,7 +38,6 @@ function getArrPlain(array $dif, string $path = '')
 function plain(array $dif)
 {
     $result = getArrPlain($dif);
-    print_r($result);
     $fixFalse = str_replace("'false'", 'false', $result);
     $fixTrue = str_replace("'true'", 'true', $fixFalse);
     $fixNull = str_replace("'null'", 'null', $fixTrue);
