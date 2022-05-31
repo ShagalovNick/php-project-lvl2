@@ -4,7 +4,7 @@ namespace Hexlet\Code\Formatters\Stylish;
 
 use function Functional\sort;
 
-function getArrStylish(array $dif, int $level = 0, string $path = '')
+function getArrStylish(array $dif, float $level = 0, string $path = '')
 {
     $difSort = sort($dif, function ($left, $right) use ($dif) {
         return strcmp((string) array_search($left, $dif, true), (string) array_search($right, $dif, true));
@@ -34,7 +34,7 @@ function getArrStylish(array $dif, int $level = 0, string $path = '')
     return implode('', [$path, ...$result]) . addIndent($level - 0.5) . "}" . PHP_EOL;
 }
 
-function addIndent(int $level)
+function addIndent(float $level)
 {
     return str_repeat(" ", $level * 4 + 2);
 }
