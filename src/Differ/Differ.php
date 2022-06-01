@@ -19,10 +19,10 @@ use function Hexlet\Code\Parsers\getFile;
 use function Hexlet\Code\Formatters\chooseFormater;
 use function Functional\sort;
 
-function boolToString($value)
+/*function boolToString($value)
 {
     return (!is_bool($value) ? $value : ($value ? 'true' : 'false'));
-}
+}*/
 
 function genDiff(string $file1, string $file2, string $formatter = 'stylish')
 {
@@ -65,7 +65,8 @@ function keyToDiff(array $arr1, array $arr2, string $key)
                 return [$arKey => $arValue[$key]];
                 //$result[$arKey] = $arValue[$key];
             } else {
-                return [$arKey => is_null($arValue[$key]) ? "null" : boolToString($arValue[$key])];
+                $val = !is_bool($arValue[$key]) ? $arValue[$key] : ($arValue[$key] ? 'true' : 'false');
+                return [$arKey => is_null($arValue[$key]) ? "null" : $val];
                 //$result[$arKey] = is_null($arValue[$key]) ? "null" : boolToString($arValue[$key]);
             }
         }
@@ -75,7 +76,7 @@ function keyToDiff(array $arr1, array $arr2, string $key)
 //}
 }
 
-function getDif($result, $arr1, $arr2, $key = '')
+function getDif(array $result, array $arr1, array $arr2, string $key = '')
 {
     $dif = array_map(function ($key, $value) use ($arr1, $arr2) {
         if (!isset($arr1[$key]) || !isset($arr2[$key]) || !is_array($arr1[$key]) || !is_array($arr2[$key])) {
