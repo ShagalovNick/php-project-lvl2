@@ -27,25 +27,27 @@ function boolToString($value)
 function genDiff(string $file1, string $file2, string $formatter = 'stylish')
 {
     [$arrFile1, $arrFile2] = getFile($file1, $file2);
-    $result = array_merge_recursive($arrFile1, $arrFile2);
-    $dif = getDif($result, $arrFile1, $arrFile2);
+    $resultArr = array_merge_recursive($arrFile1, $arrFile2);
+    $dif = getDif($resultArr, $arrFile1, $arrFile2);
     //ksort($dif);
     //print_r($dif);
     //$dif = sort($dif, fn ($left, $right) => strnatcmp($left, $right), true);
     //print_r($dif);
-    $formatter = chooseFormater($formatter);
-    $result = $formatter($dif);
+    $format = chooseFormater($formatter);
+    $result = $format($dif);
     return $result;
 }
 
-function keyToDiff($arr1, $arr2, string $key, $value)
+function keyToDiff(array $arr1, array $arr2, string $key)
 {
-    $result = [];
-    if (isset($value[1]) && (array_key_exists($key, $arr1)) && ($value[1] === $arr1[$key])) {
-            $result['nodif'] = boolToString($value[1]);
-            return $result;
-    }
-    foreach (['old' => $arr1, 'new' => $arr2] as $ark => $arval) {
+    //$result = [];
+    /*if (isset($value[1]) && (array_key_exists($key, $arr1)) && ($value[1] === $arr1[$key])) {
+            //$result['nodif'] = boolToString($value[1]);
+            //return $result;
+            return ['nodif' => !is_bool($value[1]) ? $value[1] : ($value[1] ? 'true' : 'false')];
+    }*/
+    // start foreach
+    /*foreach (['old' => $arr1, 'new' => $arr2] as $ark => $arval) {
         if (array_key_exists($key, $arval)) {
             if (is_array($arval[$key])) {
                 $result[$ark] = $arval[$key];
@@ -53,18 +55,52 @@ function keyToDiff($arr1, $arr2, string $key, $value)
                 $result[$ark] = is_null($arval[$key]) ? "null" : boolToString($arval[$key]);
             }
         }
-    }
-    return $result;
+    }*/
+    // end foreach
+    //else {
+    $arrDif = ['old' => $arr1, 'new' => $arr2];
+    $result = array_map(function ($arKey, $arValue) use ($key) {
+        if (array_key_exists($key, $arValue)) {
+            if (is_array($arValue[$key])) {
+                return [$arKey => $arValue[$key]];
+                //$result[$arKey] = $arValue[$key];
+            } else {
+                return [$arKey => is_null($arValue[$key]) ? "null" : boolToString($arValue[$key])];
+                //$result[$arKey] = is_null($arValue[$key]) ? "null" : boolToString($arValue[$key]);
+            }
+        }
+    }, array_keys($arrDif), array_values($arrDif));
+    //return $result;
+    return array_merge(...array_filter($result));
+//}
 }
 
 function getDif($result, $arr1, $arr2, $key = '')
 {
-    foreach ($result as $key => $value) {
+    $dif = array_map(function ($key, $value) use ($arr1, $arr2) {
+        if (!isset($arr1[$key]) || !isset($arr2[$key]) || !is_array($arr1[$key]) || !is_array($arr2[$key])) {
+            //$dif[$key] = keyToDiff($arr1, $arr2, $key, $value);
+            if (isset($value[1]) && (array_key_exists($key, $arr1)) && ($value[1] === $arr1[$key])) {
+                //$result['nodif'] = boolToString($value[1]);
+                //return $result;
+                return [$key => ['nodif' => !is_bool($value[1]) ? $value[1] : ($value[1] ? 'true' : 'false')]];
+            } else {
+                return [$key => keyToDiff($arr1, $arr2, $key)];
+            }
+        } else {
+            //$dif[$key] = getDif($value, $arr1[$key], $arr2[$key], $key);
+            return [$key => getDif($value, $arr1[$key], $arr2[$key], $key)];
+        }
+    }, array_keys($result), array_values($result));
+    //start foreach
+    /*foreach ($result as $key => $value) {
         if (!isset($arr1[$key]) || !isset($arr2[$key]) || !is_array($arr1[$key]) || !is_array($arr2[$key])) {
             $dif[$key] = keyToDiff($arr1, $arr2, $key, $value);
         } else {
             $dif[$key] = getDif($value, $arr1[$key], $arr2[$key], $key);
         }
-    }
-        return $dif;
+    }*/
+    // end foreach
+        //return $dif;
+        return array_merge(...array_filter($dif));
 }
